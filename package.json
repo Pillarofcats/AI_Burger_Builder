@@ -1,0 +1,19 @@
+{
+  "name": "ts-oop-strategy-builder-burger",
+  "version": "1.0.0",
+  "description": "Build a burger using typescript, OOP, strategy pattern, and builder pattern",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "tts": "tsc ./src/typescript/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
+    "eslint": "^8.48.0",
+    "typescript": "^5.2.2"
+  }
+}
