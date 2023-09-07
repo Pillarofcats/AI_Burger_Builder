@@ -2,8 +2,7 @@
   "name": "ts-oop-strategy-builder-burger",
   "version": "1.0.0",
   "description": "Build a burger using typescript, OOP, strategy pattern, and builder pattern",
-  "main": "index.js",
-  "type": "module",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "tts": "tsc ./src/typescript/index.ts",
