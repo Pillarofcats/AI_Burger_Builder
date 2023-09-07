@@ -1,5 +1,10 @@
-//IMPORTS
-import { TCooked, TBuns, TProtein, TCheese, TVeggies, TSauce } from './types.js'
+//TYPES
+type TCooked = string[]
+type TBuns = string[]
+type TProtein = string[]
+type TCheese = string[]
+type TVeggies = string[]
+type TSauce = string[]
 
 //CLASSES
 class FormProgress {
@@ -64,12 +69,12 @@ class FormProgress {
 
 class Burger {
 
-  private cooked
-  private buns
-  private protein
-  private cheese
-  private veggies
-  private sauce
+  public cooked
+  public buns
+  public protein
+  public cheese
+  public veggies
+  public sauce
 
   constructor(cooked:TCooked, buns:TBuns, protein:TProtein, cheese:TCheese, veggies:TVeggies, condiments:TSauce) {
     this.cooked = cooked
@@ -245,10 +250,16 @@ const checkboxBuns = document.querySelectorAll('input[type=checkbox][name=buns]'
 const backBtns = document.querySelectorAll('button[name=back]') as NodeListOf<HTMLButtonElement>
 const nextBtns = document.querySelectorAll('button[name=next]') as NodeListOf<HTMLButtonElement>
 const aiOutputError = document.querySelector('#error-burger') as HTMLParagraphElement
-const aiOutputJSON = document.querySelector('#json-burger') as HTMLParagraphElement
 const aiOutputBurger = document.querySelector('#ai-burger') as HTMLImageElement
 const lastFieldset = document.querySelector('fieldset[name=last]') as HTMLFieldSetElement
 const progressElements = document.querySelectorAll('[data-name="progress"]') as NodeListOf<HTMLElement>
+const outputCooked = document.querySelector('.output-cooked') as HTMLParagraphElement
+const outputBuns = document.querySelector('.output-buns') as HTMLParagraphElement
+const outputProtein = document.querySelector('.output-protein') as HTMLParagraphElement
+const outputCheese = document.querySelector('.output-cheese') as HTMLParagraphElement
+const outputVeggies = document.querySelector('.output-veggies') as HTMLParagraphElement
+const outputSauce = document.querySelector('.output-sauce') as HTMLParagraphElement
+
 
 //FUNCTIONS
 function getChoiceFieldsetIds(nodeList:NodeListOf<HTMLFieldSetElement>) {
@@ -259,6 +270,27 @@ function getChoiceFieldsetIds(nodeList:NodeListOf<HTMLFieldSetElement>) {
   }
 
   return fieldsetNames
+}
+
+function outputBurger(burger:Burger) {
+  //Reset
+  aiOutputError.textContent = ''
+  //Set
+  outputCooked.textContent=`COOKED: ${burger.cooked.join(', ')}`
+  outputBuns.textContent=`BUNS: ${burger.buns.join(', ')}`
+  outputProtein.textContent=`PROTEIN: ${burger.protein.join(', ')}`
+  outputCheese.textContent=`CHEESE: ${burger.cheese.join(', ')}`
+  outputVeggies.textContent=`VEGGIES: ${burger.veggies.join(', ')}`
+  outputSauce.textContent=`SAUCE: ${burger.sauce.join(', ')}`
+}
+
+function resetOutputBurger() {
+  outputCooked.textContent=""
+  outputBuns.textContent=""
+  outputProtein.textContent=""
+  outputCheese.textContent=""
+  outputVeggies.textContent=""
+  outputSauce.textContent=""
 }
 
 function clearCheckboxNodes(nodeList:NodeListOf<HTMLInputElement>) {
@@ -292,24 +324,17 @@ function updateFormProgressByClick(e:Event) {
   newCurrentElements.forEach((node) => node.dataset['current'] ='true' )
 }
 
-function outputJSONBurger(text:string) {
-  //Reset
-  aiOutputError.textContent = ''
-  //Set
-  aiOutputJSON.textContent = text
-}
-
 function outputAIBurger(text:string) {
   //Reset
-  aiOutputError.textContent = ''
-  aiOutputJSON.textContent = ''
+  aiOutputError.textContent = ""
+  resetOutputBurger()
   //Set
   aiOutputBurger.src = text
 }
 
 function outputError(text:string) {
   //Reset
-  aiOutputJSON.textContent = ''
+  resetOutputBurger()
   //Set
   aiOutputError.textContent = `Error: ${text}`
 }
@@ -426,11 +451,10 @@ async function submitBurgerForm(e:Event) {
     progressElements.forEach((node) => node.style.setProperty('pointer-events', 'none'))
 
     if(aIKey) {
-      console.log('what')
+
       const aIPrompt = aIBurger.getAIBurgerPrompt()
       try {
         const aIImage = await fetchAIBurger(aIPrompt, aIKey)
-        console.log('ai', aIImage)
 
         if(aIImage.error) {
           outputError(aIImage.error.code)
@@ -438,13 +462,13 @@ async function submitBurgerForm(e:Event) {
           return
         }
         else if(aIImage.data) outputAIBurger(aIImage.data[0].url)
-        else outputJSONBurger(JSON.stringify(aIBurger))
+        else outputBurger(aIBurger)
 
       } catch(error) {
         console.error(error)
       }
     } else {
-      outputJSONBurger(JSON.stringify(aIBurger))
+      outputBurger(aIBurger)
     }
 
     console.log('Submitting...')
@@ -472,3 +496,5 @@ backBtns.forEach((node) => node.addEventListener('click', () => {
 progressElements.forEach((node) => {
   node.addEventListener('click', updateFormProgressByClick)
 })
+
+export {}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script defer src="./javascript/index.js"></script>
+  <script defer type="module" src="./javascript/index.js"></script>
   <link rel="stylesheet" href="./index.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,14 @@
     </div>
     <div id="output-container">
       <p id="error-burger" class="output"></p>
-      <p id="json-burger" class="output"></p>
+      <div id="json-burger" class="output">
+        <p class="output-cooked"></p>
+        <p class="output-buns"></p>
+        <p class="output-protein"></p>
+        <p class="output-cheese"></p>
+        <p class="output-veggies"></p>
+        <p class="output-sauce"></p>
+      </div>
       <img id="ai-burger" class="output" src="" alt="">
     </div>
   </div>

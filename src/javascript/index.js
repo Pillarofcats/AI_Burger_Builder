@@ -193,10 +193,15 @@ const checkboxBuns = document.querySelectorAll('input[type=checkbox][name=buns]'
 const backBtns = document.querySelectorAll('button[name=back]');
 const nextBtns = document.querySelectorAll('button[name=next]');
 const aiOutputError = document.querySelector('#error-burger');
-const aiOutputJSON = document.querySelector('#json-burger');
 const aiOutputBurger = document.querySelector('#ai-burger');
 const lastFieldset = document.querySelector('fieldset[name=last]');
 const progressElements = document.querySelectorAll('[data-name="progress"]');
+const outputCooked = document.querySelector('.output-cooked');
+const outputBuns = document.querySelector('.output-buns');
+const outputProtein = document.querySelector('.output-protein');
+const outputCheese = document.querySelector('.output-cheese');
+const outputVeggies = document.querySelector('.output-veggies');
+const outputSauce = document.querySelector('.output-sauce');
 //FUNCTIONS
 function getChoiceFieldsetIds(nodeList) {
     const fieldsetNames = [];
@@ -204,6 +209,25 @@ function getChoiceFieldsetIds(nodeList) {
         fieldsetNames.push(node.id);
     }
     return fieldsetNames;
+}
+function outputBurger(burger) {
+    //Reset
+    aiOutputError.textContent = '';
+    //Set
+    outputCooked.textContent = `COOKED: ${burger.cooked.join(', ')}`;
+    outputBuns.textContent = `BUNS: ${burger.buns.join(', ')}`;
+    outputProtein.textContent = `PROTEIN: ${burger.protein.join(', ')}`;
+    outputCheese.textContent = `CHEESE: ${burger.cheese.join(', ')}`;
+    outputVeggies.textContent = `VEGGIES: ${burger.veggies.join(', ')}`;
+    outputSauce.textContent = `SAUCE: ${burger.sauce.join(', ')}`;
+}
+function resetOutputBurger() {
+    outputCooked.textContent = "";
+    outputBuns.textContent = "";
+    outputProtein.textContent = "";
+    outputCheese.textContent = "";
+    outputVeggies.textContent = "";
+    outputSauce.textContent = "";
 }
 function clearCheckboxNodes(nodeList) {
     nodeList.forEach((node) => {
@@ -231,22 +255,16 @@ function updateFormProgressByClick(e) {
     getCurrentProgressElements.forEach((node) => node.dataset['current'] = 'false');
     newCurrentElements.forEach((node) => node.dataset['current'] = 'true');
 }
-function outputJSONBurger(text) {
-    //Reset
-    aiOutputError.textContent = '';
-    //Set
-    aiOutputJSON.textContent = text;
-}
 function outputAIBurger(text) {
     //Reset
-    aiOutputError.textContent = '';
-    aiOutputJSON.textContent = '';
+    aiOutputError.textContent = "";
+    resetOutputBurger();
     //Set
     aiOutputBurger.src = text;
 }
 function outputError(text) {
     //Reset
-    aiOutputJSON.textContent = '';
+    resetOutputBurger();
     //Set
     aiOutputError.textContent = `Error: ${text}`;
 }
@@ -338,11 +356,9 @@ function submitBurgerForm(e) {
         lastFieldset.disabled = true;
         progressElements.forEach((node) => node.style.setProperty('pointer-events', 'none'));
         if (aIKey) {
-            console.log('what');
             const aIPrompt = aIBurger.getAIBurgerPrompt();
             try {
                 const aIImage = yield fetchAIBurger(aIPrompt, aIKey);
-                console.log('ai', aIImage);
                 if (aIImage.error) {
                     outputError(aIImage.error.code);
                     lastFieldset.disabled = false;
@@ -351,14 +367,14 @@ function submitBurgerForm(e) {
                 else if (aIImage.data)
                     outputAIBurger(aIImage.data[0].url);
                 else
-                    outputJSONBurger(JSON.stringify(aIBurger));
+                    outputBurger(aIBurger);
             }
             catch (error) {
                 console.error(error);
             }
         }
         else {
-            outputJSONBurger(JSON.stringify(aIBurger));
+            outputBurger(aIBurger);
         }
         console.log('Submitting...');
         setTimeout(() => {
@@ -380,3 +396,4 @@ backBtns.forEach((node) => node.addEventListener('click', () => {
 progressElements.forEach((node) => {
     node.addEventListener('click', updateFormProgressByClick);
 });
+export {};
