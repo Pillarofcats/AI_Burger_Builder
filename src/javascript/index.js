@@ -212,6 +212,7 @@ function getChoiceFieldsetIds(nodeList) {
 }
 function outputBurger(burger) {
     //Reset
+    aiOutputBurger.src = "";
     aiOutputError.textContent = '';
     //Set
     outputCooked.textContent = `COOKED: ${burger.cooked.join(', ')}`;
@@ -265,6 +266,7 @@ function outputAIBurger(text) {
 function outputError(text) {
     //Reset
     resetOutputBurger();
+    aiOutputBurger.src = "";
     //Set
     aiOutputError.textContent = `Error: ${text}`;
 }

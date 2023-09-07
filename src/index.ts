@@ -274,6 +274,7 @@ function getChoiceFieldsetIds(nodeList:NodeListOf<HTMLFieldSetElement>) {
 
 function outputBurger(burger:Burger) {
   //Reset
+  aiOutputBurger.src = ""
   aiOutputError.textContent = ''
   //Set
   outputCooked.textContent=`COOKED: ${burger.cooked.join(', ')}`
@@ -335,6 +336,7 @@ function outputAIBurger(text:string) {
 function outputError(text:string) {
   //Reset
   resetOutputBurger()
+  aiOutputBurger.src = ""
   //Set
   aiOutputError.textContent = `Error: ${text}`
 }
