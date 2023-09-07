@@ -380,4 +380,3 @@ backBtns.forEach((node) => node.addEventListener('click', () => {
 progressElements.forEach((node) => {
     node.addEventListener('click', updateFormProgressByClick);
 });
-export {};
