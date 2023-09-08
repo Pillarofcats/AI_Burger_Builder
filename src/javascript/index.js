@@ -179,7 +179,7 @@ const veggiesCheckboxes = ['tomato', 'lettuce', 'onion', 'pickle', 'hot-peppers'
 const fsVeggies = new FieldSetCheckboxes(veggiesFieldset, veggiesCheckboxes);
 //Fieldset - sauce
 const sauceFieldset = 'sauce';
-const sauceCheckboxes = ['mayonnaise', 'mustard', 'ketchup', 'relish', 'salt', 'pepper', 'bbq-sauce', 'ranch'];
+const sauceCheckboxes = ['mayonnaise', 'mustard', 'ketchup', 'relish', 'bbq-sauce', 'ranch'];
 const fsSauce = new FieldSetCheckboxes(sauceFieldset, sauceCheckboxes, false, true);
 //Append fieldset checkboxes to #burger-form
 const burgerForm = document.querySelector('#burger-form');
@@ -212,15 +212,16 @@ function getChoiceFieldsetIds(nodeList) {
 }
 function outputBurger(burger) {
     //Reset
-    aiOutputBurger.src = "";
+    aiOutputBurger.src = '""';
     aiOutputError.textContent = '';
     //Set
-    outputCooked.textContent = `COOKED: ${burger.cooked.join(', ')}`;
-    outputBuns.textContent = `BUNS: ${burger.buns.join(', ')}`;
-    outputProtein.textContent = `PROTEIN: ${burger.protein.join(', ')}`;
-    outputCheese.textContent = `CHEESE: ${burger.cheese.join(', ')}`;
-    outputVeggies.textContent = `VEGGIES: ${burger.veggies.join(', ')}`;
-    outputSauce.textContent = `SAUCE: ${burger.sauce.join(', ')}`;
+    console.log('cheese', burger.cheese.length);
+    outputCooked.textContent = `COOKED: ${burger.cooked}`;
+    outputBuns.textContent = `BUNS: ${burger.buns}`;
+    outputProtein.textContent = `PROTEIN: ${burger.protein}`;
+    outputCheese.textContent = `${burger.cheese.length > 0 ? `CHEESE: ${burger.cheese.join(', ')}` : ''}`;
+    outputVeggies.textContent = `${burger.veggies.length > 0 ? `VEGGIES: ${burger.veggies.join(', ')}` : ''}`;
+    outputSauce.textContent = `${burger.sauce.length > 0 ? `SAUCE: ${burger.sauce.join(', ')}` : ''}`;
 }
 function resetOutputBurger() {
     outputCooked.textContent = "";

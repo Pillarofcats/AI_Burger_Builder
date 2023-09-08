@@ -40,8 +40,8 @@ fieldset {
   border: none;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  margin: auto 0;
+  place-items: center;
   gap: 1rem;
 }
 
@@ -50,10 +50,11 @@ fieldset #checkboxes-container {
   flex-direction: column;
   gap: 1rem;
   height: 10rem;
+  width: 50%;
   flex-wrap: wrap;
 }
 
-fieldset #checkboxes-container > div {
+fieldset #checkboxes-container>div {
   display: flex;
   gap: 1.5rem;
 }
@@ -63,11 +64,11 @@ fieldset label {
 }
 
 legend {
+  text-align: center;
   font-size: larger;
   letter-spacing: 1px;
   font-weight: bold;
   color: rgb(75, 137, 192);
-  text-align: center;
 }
 
 input[type=checkbox] {
@@ -153,7 +154,7 @@ button:hover {
 }
 
 h3 {
-  cursor:pointer;
+  cursor: pointer;
   user-select: none;
 }
 
@@ -166,7 +167,7 @@ fieldset[data-current=false] {
   display: none;
 }
 
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 375px) {
   fieldset #checkboxes-container {
     height: auto;
   }
